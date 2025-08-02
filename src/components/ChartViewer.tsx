@@ -146,11 +146,17 @@ export const ChartViewer = ({ isMobileMode = false, chart, allRanges, onBackToCh
   }, []);
 
   const handleButtonClick = (button: ChartButton) => {
-    if (button.type === 'exit' || button.type === 'label') {
-      onBackToCharts(); // Assuming exit is the only non-range action for now
+    if (button.type === 'label') {
+      // It's a label, do nothing on click.
       return;
     }
-
+  
+    if (button.type === 'exit') {
+      onBackToCharts();
+      return;
+    }
+  
+    // If it's a 'normal' button
     const linkedRange = allRanges.find(range => range.id === button.linkedItem);
     if (linkedRange) {
       setDisplayedRange(linkedRange);
